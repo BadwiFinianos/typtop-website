@@ -52,6 +52,7 @@ const DurationSelector = ({ returnDuration }) => {
         {durationValues.map((dur) => {
           return (
             <Button
+              key={dur.value}
               variant="contained"
               style={{
                 backgroundColor:
