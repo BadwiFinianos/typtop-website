@@ -67,7 +67,7 @@ const Starting = ({ text, duration, countDone, cancel }) => {
           marginBottom: 8,
         }}
       >
-        (PS: punctuation is not required)
+        (PS: punctuation is not required but the test is case sensitive)
       </label>
       <label
         style={{

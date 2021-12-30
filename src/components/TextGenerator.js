@@ -19,7 +19,7 @@ const lorem = new LoremIpsum({
   },
 });
 
-const TextGenerator = ({ returnText }) => {
+const TextGenerator = ({ returnText, enabled }) => {
   const [text, setText] = useState(
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquet accumsan lorem, non placerat ex consectetur id."
   );
@@ -27,7 +27,9 @@ const TextGenerator = ({ returnText }) => {
   const [unit, setUnit] = useState("paragraphes");
 
   useEffect(() => {
-    returnText(text);
+    if (enabled) {
+      returnText(text);
+    }
   }, [text]);
 
   const GenerateText = () => {
@@ -106,7 +108,7 @@ const TextGenerator = ({ returnText }) => {
         </Select>
         <Button
           variant="contained"
-          style={{ backgroundColor: DEFAULT_THEME.SECONDARY, minWidth:80 }}
+          style={{ backgroundColor: DEFAULT_THEME.SECONDARY, minWidth: 80 }}
           onClick={() => {
             GenerateText();
           }}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DEFAULT_THEME } from "../themes";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Test = ({ text, duration, countDone, cancel }) => {
   const [count, setCount] = useState(duration * 60);
@@ -50,6 +51,11 @@ const Test = ({ text, duration, countDone, cancel }) => {
       >
         {count}
       </label>
+      <LinearProgress
+        variant="determinate"
+        value={((duration * 60 - count) * 100) / (duration * 60)}
+        style={{ height: 30, borderRadius: 12 }}
+      />
       <label
         style={{
           fontWeight: "700",
@@ -57,11 +63,18 @@ const Test = ({ text, duration, countDone, cancel }) => {
           color: DEFAULT_THEME.TEXT,
           textAlign: "start",
           marginBottom: 8,
+          marginTop: 20,
         }}
       >
         Text:
       </label>
       <label
+        onselectstart="return false"
+        oncut="return false"
+        oncopy="return false"
+        onpaste="return false"
+        ondrag="return false"
+        ondrop="return false"
         style={{
           fontSize: 16,
           color: DEFAULT_THEME.TEXT,
@@ -75,6 +88,14 @@ const Test = ({ text, duration, countDone, cancel }) => {
         {text}
       </label>
       <TextField
+        onPaste={(e) => {
+          e.preventDefault();
+          return false;
+        }}
+        onCopy={(e) => {
+          e.preventDefault();
+          return false;
+        }}
         id="outlined-multiline-static"
         label="Type here"
         multiline

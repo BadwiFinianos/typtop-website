@@ -31,6 +31,7 @@ const MainView = () => {
         <div>
           <Banner />
           <TextGenerator
+            enabled={!starting && !testing && !testDone}
             returnText={(txt) => {
               setText(txt);
             }}
@@ -85,8 +86,8 @@ const MainView = () => {
           text={text}
           duration={duration}
           countDone={(txt, dur) => {
-            setTesting(false);
             setTestDone(true);
+            setTesting(false);
             setTypedText(txt);
             setUsedDuration(dur);
             resultsDivRef.current.scrollIntoView();
@@ -108,8 +109,8 @@ const MainView = () => {
             setDuration(1);
           }}
           repeat={() => {
-            setTestDone(false);
             setStarting(true);
+            setTestDone(false);
             startingDivRef.current.scrollIntoView();
           }}
         />
