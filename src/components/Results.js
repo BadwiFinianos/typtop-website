@@ -10,12 +10,12 @@ const Results = ({
   startNew,
   repeat,
 }) => {
-
   const [textWords, setTextWords] = useState([]);
   const [typedTextWords, setTypedTextWords] = useState([]);
   const [correctWordsCount, setCorrectWordsCount] = useState(0);
   const [typingScore, setTypingScore] = useState(0);
   const [durationScore, setDurationScore] = useState(0);
+  const [wordPerMinute, setWordPerMinute] = useState(0);
   const [calculateTypingScore, setCalculateTypingScore] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
   useEffect(() => {
@@ -23,13 +23,13 @@ const Results = ({
   }, [duration, usedDuration]);
 
   useEffect(() => {
-    let txtWords = text.replaceAll(".", "").split(/(?:,| )+./);
+    let txtWords = text.split(" ");
     setTextWords(txtWords);
     setCalculateTypingScore(!calculateTypingScore);
   }, [text]);
 
   useEffect(() => {
-    let txtWords = typedText.replaceAll(".", "").split(/(?:,| )+./);
+    let txtWords = typedText.split(" ");
     setTypedTextWords(txtWords);
     setCalculateTypingScore(!calculateTypingScore);
   }, [typedText]);
@@ -44,13 +44,14 @@ const Results = ({
     }
     setCorrectWordsCount(count);
     setTypingScore((count * 100) / textWords.length);
+    setWordPerMinute((typedTextWords.length * 60) / usedDuration);
   }, [calculateTypingScore]);
 
   useEffect(() => {
     // duration score coefficient 1
     // typing score coefficient 4
-    setTotalScore((durationScore + typingScore * 4) / 5);
-  }, [durationScore, typingScore]);
+    setTotalScore((wordPerMinute * typingScore) / 100);
+  }, [wordPerMinute, typingScore]);
   return (
     <div style={{ marginTop: 100, display: "flex", flexDirection: "column" }}>
       <label
@@ -77,7 +78,7 @@ const Results = ({
           marginBottom: 20,
         }}
       >
-        Speed Accuracy: {durationScore.toFixed(0) + "/100"}
+        Words Per Minute: {wordPerMinute.toFixed(0)}
       </label>
       <label
         style={{
@@ -123,12 +124,12 @@ const Results = ({
             marginBottom: 20,
             padding: 12,
             borderRadius: 12,
-            width: 120,
+            width: 200,
             backgroundColor:
-              totalScore < 40 ? "red" : totalScore < 60 ? "yellow" : "green",
+              totalScore < 20 ? "red" : totalScore < 30 ? "yellow" : "green",
           }}
         >
-          {totalScore.toFixed(0) + "/100"}
+          {totalScore.toFixed(0) + " WPM"}
         </label>
       </div>
       <div

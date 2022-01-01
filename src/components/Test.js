@@ -82,12 +82,6 @@ const Test = ({ text, duration, countDone, cancel }) => {
         Text:
       </label>
       <label
-        onselectstart="return false"
-        oncut="return false"
-        oncopy="return false"
-        onpaste="return false"
-        ondrag="return false"
-        ondrop="return false"
         style={{
           fontSize: 16,
           color: DEFAULT_THEME.TEXT,
@@ -102,14 +96,8 @@ const Test = ({ text, duration, countDone, cancel }) => {
           if (typedTextWords.length - 1 == idx) {
             return (
               <label
-                onselectstart="return false"
-                oncut="return false"
-                oncopy="return false"
-                onpaste="return false"
-                ondrag="return false"
-                ondrop="return false"
                 style={{
-                  color: "blue",
+                  color: DEFAULT_THEME.SECONDARY,
                 }}
               >
                 {wrd + " "}
@@ -133,7 +121,7 @@ const Test = ({ text, duration, countDone, cancel }) => {
         label="Type here"
         multiline
         minRows={4}
-        value={typedText}
+        //value={typedText}
         onChange={(e) => {
           setTypedText(e.target.value);
         }}
