@@ -7,6 +7,9 @@ import LinearProgress from "@mui/material/LinearProgress";
 const Test = ({ text, duration, countDone, cancel }) => {
   const [count, setCount] = useState(duration * 60);
   const [typedText, setTypedText] = useState("");
+  const [textWords, setTextWords] = useState([]);
+  const [typedTextWords, setTypedTextWords] = useState([]);
+
   useEffect(() => {
     if (count > 0) {
       const interval = setInterval(function () {
@@ -19,6 +22,16 @@ const Test = ({ text, duration, countDone, cancel }) => {
       return () => clearInterval(interval);
     }
   }, [count]);
+
+  useEffect(() => {
+    let txtWords = text.split(" ");
+    setTextWords(txtWords);
+  }, [text]);
+
+  useEffect(() => {
+    let txtWords = typedText.split(" ");
+    setTypedTextWords(txtWords);
+  }, [typedText]);
 
   return (
     <div
@@ -85,7 +98,27 @@ const Test = ({ text, duration, countDone, cancel }) => {
           padding: 12,
         }}
       >
-        {text}
+        {textWords.map((wrd, idx) => {
+          if (typedTextWords.length - 1 == idx) {
+            return (
+              <label
+                onselectstart="return false"
+                oncut="return false"
+                oncopy="return false"
+                onpaste="return false"
+                ondrag="return false"
+                ondrop="return false"
+                style={{
+                  color: "blue",
+                }}
+              >
+                {wrd + " "}
+              </label>
+            );
+          } else {
+            return wrd + " ";
+          }
+        })}
       </label>
       <TextField
         onPaste={(e) => {

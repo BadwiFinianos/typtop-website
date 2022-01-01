@@ -29,7 +29,6 @@ const Results = ({
   }, [text]);
 
   useEffect(() => {
-    console.log(text,typedText);
     let txtWords = typedText.replaceAll(".", "").split(/(?:,| )+./);
     setTypedTextWords(txtWords);
     setCalculateTypingScore(!calculateTypingScore);
